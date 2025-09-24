@@ -1,0 +1,91 @@
+:root {
+  --primary: #2563EB;
+  --secondary: #F59E0B; /* also success */
+  --success: #F59E0B;
+  --error: #EF4444;
+
+  --background: #f9fafb;
+  --surface: #ffffff;
+  --text: #111827;
+
+  --muted: #6b7280;
+  --border: #E5E7EB;
+
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 6px 18px rgba(37,99,235,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-lg: 0 18px 46px rgba(37,99,235,0.12), 0 8px 24px rgba(0,0,0,0.08);
+
+  --gradient-soft: linear-gradient(180deg, rgba(59,130,246,0.08), rgba(249,250,251,0.8));
+}
+
+.dark {
+  --background: #0B1220;
+  --surface: #0f172a;
+  --text: #E5E7EB;
+  --muted: #9CA3AF;
+  --border: #1f2937;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.5);
+  --shadow-md: 0 6px 18px rgba(0,0,0,0.35);
+  --shadow-lg: 0 18px 46px rgba(0,0,0,0.45);
+}
+
+.app-root {
+  background: var(--background);
+  color: var(--text);
+  min-height: 100%;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn:active { transform: translateY(0); box-shadow: var(--shadow-sm); }
+.btn.secondary { background: var(--secondary); color: #111827; }
+.btn.ghost { background: transparent; border-color: var(--border); color: var(--text); }
+.btn.ghost:hover { background: rgba(37,99,235,0.06); border-color: var(--primary); }
+
+.input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  padding: 12px 14px;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: rgba(37,99,235,0.1);
+  color: var(--primary);
+}
+
+.separator { height: 1px; background: var(--border); width: 100%; }

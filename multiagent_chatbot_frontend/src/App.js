@@ -1,47 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import './styles/theme.css';
+import './styles/layout.css';
+import TopBar from './components/TopBar';
+import Sidebar from './components/Sidebar';
+import ChatPanel from './components/ChatPanel';
+import ConversationHistory from './components/ConversationHistory';
+import { useChatState } from './hooks/useChatState';
 
-// PUBLIC_INTERFACE
+/**
+ * Root App renders the full multi-agent chatbot layout:
+ * - TopBar (user info / status)
+ * - Sidebar (agent list and add agent control)
+ * - ChatPanel (messages + input)
+ * - ConversationHistory (list of prior conversations)
+ */
 function App() {
-  const [theme, setTheme] = useState('light');
-
-  // Effect to apply theme to document element
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  // PUBLIC_INTERFACE
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
+  const {
+    theme,
+    setTheme,
+    agents,
+    activeAgentId,
+    setActiveAgentId,
+    conversations,
+    activeConversationId,
+    setActiveConversationId,
+    messages,
+    sendMessage,
+    user,
+    createNewConversation,
+    addAgent
+  } = useChatState();
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`app-root ${theme}`}>
+      <TopBar
+        user={user}
+        theme={theme}
+        onToggleTheme={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+      />
+      <div className="app-body">
+        <Sidebar
+          agents={agents}
+          activeAgentId={activeAgentId}
+          onSelectAgent={setActiveAgentId}
+          onAddAgent={addAgent}
+        />
+        <main className="app-main">
+          <ChatPanel
+            agent={agents.find(a => a.id === activeAgentId)}
+            messages={messages}
+            onSend={sendMessage}
+          />
+          <ConversationHistory
+            conversations={conversations}
+            activeConversationId={activeConversationId}
+            onSelectConversation={setActiveConversationId}
+            onNewConversation={createNewConversation}
+          />
+        </main>
+      </div>
     </div>
   );
 }
